@@ -1,6 +1,6 @@
 'use client'
 
-import { Check, Copy, PartyPopper } from 'lucide-react'
+import { ArrowRight, Check, Copy, PartyPopper } from 'lucide-react'
 import { useState } from 'react'
 import { ProfilePreview } from '../profile-preview'
 import type { OnboardingData } from '../types'
@@ -48,14 +48,27 @@ export function StepDone({ data, onRestart }: { data: OnboardingData; onRestart:
         <div className="mt-5 flex flex-wrap gap-2 text-sm">
           <Chip on={data.emailVerified} label={data.emailVerified ? 'Email verified' : 'Email not verified'} />
           <Chip on label={`${data.socials.length + data.links.length} links`} />
-          <Chip on={data.contactExchangeEnabled} label={data.contactExchangeEnabled ? 'Contact card on' : 'Contact card off'} />
+          <Chip on={data.shareContact} label={data.shareContact ? 'Contact card on' : 'Contact card off'} />
           <Chip on={data.inDirectory} label={data.inDirectory ? 'In directory' : 'Private'} />
         </div>
 
         <button
           type="button"
           onClick={onRestart}
-          className="mt-8 text-sm font-semibold text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+          className="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-4 font-display text-base font-bold text-primary-foreground transition-transform hover:scale-[1.01] active:scale-[0.99] sm:w-auto"
+        >
+          Take me to my home
+          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+        </button>
+        <p className="mt-3 max-w-md text-pretty text-sm leading-relaxed text-muted-foreground">
+          From your home you can control the content of your profile, fine-tune the advanced
+          design, and manage your account further.
+        </p>
+
+        <button
+          type="button"
+          onClick={onRestart}
+          className="mt-5 text-sm font-semibold text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
         >
           Run the onboarding again
         </button>

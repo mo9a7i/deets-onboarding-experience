@@ -41,6 +41,7 @@ export type ContactCard = {
 export type OnboardingData = {
   email: string
   emailVerified: boolean
+  password: string
   username: string
   title: string
   bio: string
@@ -50,7 +51,8 @@ export type OnboardingData = {
   themeId: string | null
   socials: SocialItem[]
   links: LinkItem[]
-  contactExchangeEnabled: boolean
+  shareContact: boolean
+  askVisitors: boolean
   contactCard: ContactCard
   inDirectory: boolean
 }
@@ -58,6 +60,7 @@ export type OnboardingData = {
 export const INITIAL_DATA: OnboardingData = {
   email: '',
   emailVerified: false,
+  password: '',
   username: '',
   title: '',
   bio: '',
@@ -67,7 +70,8 @@ export const INITIAL_DATA: OnboardingData = {
   themeId: DEFAULT_THEME.id,
   socials: [],
   links: [],
-  contactExchangeEnabled: false,
+  shareContact: false,
+  askVisitors: false,
   contactCard: {
     fullName: '',
     jobTitle: '',

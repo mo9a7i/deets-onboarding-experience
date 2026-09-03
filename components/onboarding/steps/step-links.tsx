@@ -14,8 +14,35 @@ function uid() {
   return Math.random().toString(36).slice(2, 9)
 }
 
+// Placeholder hints shown per platform so the stacked fields feel guided.
+const PLATFORM_HINTS: Record<string, string> = {
+  Instagram: '@username',
+  X: '@handle',
+  TikTok: '@username',
+  YouTube: 'channel URL or @handle',
+  LinkedIn: 'in/your-name',
+  GitHub: 'username',
+  Website: 'https://yoursite.com',
+}
+
 export function StepLinks({ data, update, goToVerify }: Props) {
   const locked = !data.emailVerified
+
+  function getHandle(platform: string) {
+    return data.socials.find((s) => s.platform === platform)?.handle ?? ''
+  }
+
+  function setHandle(platform: string, handle: string) {
+    const existing = data.socials.find((s) => s.platform === platform)
+    if (!existing) {
+      const socials: SocialItem[] = [...data.socials, { id: uid(), platform, handle }]
+      update({ socials })
+      return
+    }
+    update({
+      socials: data.socials.map((s) => (s.platform === platform ? { ...s, handle } : s)),
+    })
+  }
 
   function addLink() {
     const links: LinkItem[] = [...data.links, { id: uid(), label: '', url: '' }]
@@ -26,21 +53,6 @@ export function StepLinks({ data, update, goToVerify }: Props) {
   }
   function removeLink(id: string) {
     update({ links: data.links.filter((l) => l.id !== id) })
-  }
-
-  function toggleSocial(platform: string) {
-    const existing = data.socials.find((s) => s.platform === platform)
-    if (existing) {
-      update({ socials: data.socials.filter((s) => s.platform !== platform) })
-    } else {
-      const socials: SocialItem[] = [...data.socials, { id: uid(), platform, handle: '' }]
-      update({ socials })
-    }
-  }
-  function updateSocial(platform: string, handle: string) {
-    update({
-      socials: data.socials.map((s) => (s.platform === platform ? { ...s, handle } : s)),
-    })
   }
 
   return (
@@ -76,50 +88,29 @@ export function StepLinks({ data, update, goToVerify }: Props) {
       )}
 
       <fieldset disabled={locked} className={locked ? 'pointer-events-none opacity-50' : ''}>
-        <p className="mb-2 text-sm font-semibold text-foreground">Social profiles</p>
-        <div className="mb-6 flex flex-wrap gap-2">
-          {SOCIAL_PLATFORMS.map((platform) => {
-            const active = data.socials.some((s) => s.platform === platform)
-            return (
-              <button
-                key={platform}
-                type="button"
-                onClick={() => toggleSocial(platform)}
-                className={`rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors ${
-                  active
-                    ? 'border-foreground bg-foreground text-background'
-                    : 'border-border bg-card text-foreground hover:border-foreground/40'
-                }`}
-              >
+        <p className="mb-3 text-sm font-semibold text-foreground">Social profiles</p>
+        <div className="space-y-2.5">
+          {SOCIAL_PLATFORMS.map((platform) => (
+            <div
+              key={platform}
+              className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-2.5"
+            >
+              <span className="w-24 shrink-0 text-sm font-semibold text-foreground">
                 {platform}
-              </button>
-            )
-          })}
+              </span>
+              <input
+                type="text"
+                placeholder={PLATFORM_HINTS[platform] ?? '@handle or URL'}
+                value={getHandle(platform)}
+                onChange={(e) => setHandle(platform, e.target.value)}
+                className="w-full rounded-lg bg-transparent px-1 py-1 text-sm text-foreground outline-none placeholder:text-muted-foreground"
+              />
+            </div>
+          ))}
         </div>
 
-        {data.socials.length > 0 ? (
-          <div className="mb-6 space-y-2">
-            {data.socials.map((s) => (
-              <div key={s.id} className="flex items-center gap-2">
-                <span className="w-24 shrink-0 text-sm font-semibold text-foreground">
-                  {s.platform}
-                </span>
-                <input
-                  type="text"
-                  placeholder="@handle or URL"
-                  value={s.handle}
-                  onChange={(e) => updateSocial(s.platform, e.target.value)}
-                  className="w-full rounded-xl border border-input bg-card px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-ring"
-                />
-              </div>
-            ))}
-          </div>
-        ) : null}
-
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-semibold text-foreground">Custom links</p>
-        </div>
-        <div className="mt-2 space-y-2">
+        <p className="mb-2 mt-6 text-sm font-semibold text-foreground">Custom links</p>
+        <div className="space-y-2">
           {data.links.map((l) => (
             <div key={l.id} className="flex items-center gap-2 rounded-xl border border-border bg-card p-2">
               <LinkIcon className="ml-1 h-4 w-4 shrink-0 text-muted-foreground" />

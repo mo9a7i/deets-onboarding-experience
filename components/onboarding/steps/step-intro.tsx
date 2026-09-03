@@ -2,7 +2,23 @@
 
 import { ArrowRight } from 'lucide-react'
 import { ProfilePreview } from '../profile-preview'
+import { Typewriter } from '../typewriter'
 import { DEFAULT_THEME } from '../types'
+
+const TYPEWRITER_WORDS = [
+  'everything',
+  'restaurants',
+  'coffee shops',
+  'online stores',
+  'influencers',
+  'business cards',
+  'creators',
+  'artists',
+  'podcasts',
+  'side projects',
+  'portfolios',
+  'events',
+]
 
 export function StepIntro({ onStart }: { onStart: () => void }) {
   return (
@@ -14,7 +30,7 @@ export function StepIntro({ onStart }: { onStart: () => void }) {
         <h1 className="mt-5 text-balance font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-foreground sm:text-6xl">
           One link for
           <br />
-          <span className="text-primary">everything</span> you are.
+          <Typewriter words={TYPEWRITER_WORDS} className="text-primary" />
         </h1>
         <p className="mt-5 max-w-md text-pretty text-lg leading-relaxed text-muted-foreground">
           Set up your profile in seven quick steps. Claim your URL, pick your colors, add your

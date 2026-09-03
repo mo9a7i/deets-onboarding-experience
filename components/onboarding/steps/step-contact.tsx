@@ -1,6 +1,6 @@
 'use client'
 
-import { Contact } from 'lucide-react'
+import { Contact, Users, Sparkles } from 'lucide-react'
 import { StepShell } from '../step-shell'
 import type { ContactCard, OnboardingData } from '../types'
 
@@ -17,9 +17,28 @@ const FIELDS: { key: keyof ContactCard; label: string; placeholder: string; type
   { key: 'phone', label: 'Phone', placeholder: '+1 555 123 4567', type: 'tel' },
 ]
 
-export function StepContact({ data, update }: Props) {
-  const enabled = data.contactExchangeEnabled
+function Toggle({ on, onToggle, label }: { on: boolean; onToggle: () => void; label: string }) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={on}
+      aria-label={label}
+      onClick={onToggle}
+      className={`relative h-7 w-12 shrink-0 rounded-full transition-colors ${
+        on ? 'bg-primary' : 'bg-muted-foreground/30'
+      }`}
+    >
+      <span
+        className={`absolute top-0.5 h-6 w-6 rounded-full bg-card shadow-sm transition-transform ${
+          on ? 'translate-x-[22px]' : 'translate-x-0.5'
+        }`}
+      />
+    </button>
+  )
+}
 
+export function StepContact({ data, update }: Props) {
   function setCard(key: keyof ContactCard, value: string) {
     update({ contactCard: { ...data.contactCard, [key]: value } })
   }
@@ -27,41 +46,31 @@ export function StepContact({ data, update }: Props) {
   return (
     <StepShell
       eyebrow="Step 6 · Business card"
-      title="Exchange contacts with your visitors"
-      subtitle="Turn your profile into a digital business card. Visitors can save your details and share theirs back with you."
+      title="Turn your profile into a digital business card"
+      subtitle="Share your details in a tap and, if you like, collect theirs back."
     >
+      {/* 1. Share your own contact */}
       <label className="flex cursor-pointer items-center gap-4 rounded-2xl border border-border bg-card p-5">
         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground">
           <Contact className="h-5 w-5" />
         </span>
         <span className="flex-1">
           <span className="block font-display font-bold text-foreground">
-            Ask visitors to exchange contacts
+            Want to share your contact?
           </span>
           <span className="block text-sm text-muted-foreground">
-            Show a &ldquo;Save contact&rdquo; button and a form to collect theirs.
+            Add a &ldquo;Save contact&rdquo; button so visitors can save you instantly.
           </span>
         </span>
-        <button
-          type="button"
-          role="switch"
-          aria-checked={enabled}
-          onClick={() => update({ contactExchangeEnabled: !enabled })}
-          className={`relative h-7 w-12 shrink-0 rounded-full transition-colors ${
-            enabled ? 'bg-primary' : 'bg-muted-foreground/30'
-          }`}
-        >
-          <span
-            className={`absolute top-0.5 h-6 w-6 rounded-full bg-card shadow-sm transition-transform ${
-              enabled ? 'translate-x-[22px]' : 'translate-x-0.5'
-            }`}
-          />
-        </button>
+        <Toggle
+          on={data.shareContact}
+          onToggle={() => update({ shareContact: !data.shareContact })}
+          label="Share your contact"
+        />
       </label>
 
-      {enabled ? (
-        <div className="mt-5 rounded-2xl border border-border bg-card p-5">
-          <p className="mb-4 text-sm font-semibold text-foreground">Your business card details</p>
+      {data.shareContact ? (
+        <div className="mt-3 rounded-2xl border border-border bg-card p-5">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {FIELDS.map((f) => (
               <div key={f.key} className={f.span ? 'sm:col-span-2' : ''}>
@@ -82,11 +91,32 @@ export function StepContact({ data, update }: Props) {
               </div>
             ))}
           </div>
-          <p className="mt-4 text-xs text-muted-foreground">
-            This will be saved as your primary card. You can add more cards later.
+          <p className="mt-4 flex items-start gap-2 text-xs text-muted-foreground">
+            <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+            More details can be added to your business card later in our profile design studio.
           </p>
         </div>
       ) : null}
+
+      {/* 2. Ask visitors to exchange contact */}
+      <label className="mt-3 flex cursor-pointer items-center gap-4 rounded-2xl border border-border bg-card p-5">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground">
+          <Users className="h-5 w-5" />
+        </span>
+        <span className="flex-1">
+          <span className="block font-display font-bold text-foreground">
+            Ask visitors to exchange contact?
+          </span>
+          <span className="block text-sm text-muted-foreground">
+            Show a short form so visitors can share their details back with you.
+          </span>
+        </span>
+        <Toggle
+          on={data.askVisitors}
+          onToggle={() => update({ askVisitors: !data.askVisitors })}
+          label="Ask visitors to exchange contact"
+        />
+      </label>
     </StepShell>
   )
 }

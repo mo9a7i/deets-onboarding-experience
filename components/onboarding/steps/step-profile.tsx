@@ -1,8 +1,9 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Camera, X } from 'lucide-react'
 import { StepShell } from '../step-shell'
+import { AvatarCropper } from '../avatar-cropper'
 import type { OnboardingData } from '../types'
 
 type Props = {
@@ -12,13 +13,16 @@ type Props = {
 
 export function StepProfile({ data, update }: Props) {
   const fileRef = useRef<HTMLInputElement | null>(null)
+  const [cropSrc, setCropSrc] = useState<string | null>(null)
 
   function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
     const reader = new FileReader()
-    reader.onload = () => update({ avatarDataUrl: reader.result as string })
+    reader.onload = () => setCropSrc(reader.result as string)
     reader.readAsDataURL(file)
+    // Allow re-selecting the same file later.
+    e.target.value = ''
   }
 
   const initials = (data.title || data.username || 'You')
@@ -32,7 +36,7 @@ export function StepProfile({ data, update }: Props) {
     <StepShell
       eyebrow="Step 3 · Introduce yourself"
       title="Add your name and a face"
-      subtitle="Your title is how visitors know who they've landed on. A photo is optional, but profiles with one get noticed more."
+      subtitle="Your title is how visitors know who they've landed on. Upload a photo and crop it just right — it's optional, but profiles with one get noticed more."
     >
       <div className="space-y-6">
         <div className="flex items-center gap-5">
@@ -119,6 +123,17 @@ export function StepProfile({ data, update }: Props) {
           <p className="mt-1 text-right text-xs text-muted-foreground">{data.bio.length}/120</p>
         </div>
       </div>
+
+      {cropSrc ? (
+        <AvatarCropper
+          image={cropSrc}
+          onCancel={() => setCropSrc(null)}
+          onSave={(dataUrl) => {
+            update({ avatarDataUrl: dataUrl })
+            setCropSrc(null)
+          }}
+        />
+      ) : null}
     </StepShell>
   )
 }
