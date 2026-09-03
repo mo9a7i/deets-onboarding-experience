@@ -1,8 +1,29 @@
 'use client'
 
-import { Lock, Plus, Trash2, LinkIcon, ShieldCheck } from 'lucide-react'
+import { Lock, Plus, Trash2, LinkIcon, Mail } from 'lucide-react'
 import { StepShell } from '../step-shell'
 import { SOCIAL_PLATFORMS, type OnboardingData, type LinkItem, type SocialItem } from '../types'
+
+function Toggle({ on, onToggle, label }: { on: boolean; onToggle: () => void; label: string }) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={on}
+      aria-label={label}
+      onClick={onToggle}
+      className={`relative h-7 w-12 shrink-0 rounded-full transition-colors ${
+        on ? 'bg-primary' : 'bg-muted-foreground/30'
+      }`}
+    >
+      <span
+        className={`absolute top-0.5 h-6 w-6 rounded-full bg-card shadow-sm transition-transform ${
+          on ? 'translate-x-[22px]' : 'translate-x-0.5'
+        }`}
+      />
+    </button>
+  )
+}
 
 type Props = {
   data: OnboardingData
@@ -80,12 +101,29 @@ export function StepLinks({ data, update, goToVerify }: Props) {
             Verify email
           </button>
         </div>
-      ) : (
-        <div className="mb-6 flex items-center gap-2 rounded-xl bg-muted px-4 py-2.5 text-sm font-medium text-muted-foreground">
-          <ShieldCheck className="h-4 w-4 text-primary" />
-          Email verified — you&apos;re all set to add links.
-        </div>
-      )}
+      ) : null}
+
+      {!locked && data.email ? (
+        <label className="mb-6 flex cursor-pointer items-center gap-4 rounded-2xl border border-border bg-card p-5">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground">
+            <Mail className="h-5 w-5" />
+          </span>
+          <span className="flex-1">
+            <span className="block font-display font-bold text-foreground">
+              We have your email on file
+            </span>
+            <span className="block text-sm text-muted-foreground">
+              Add <span className="font-medium text-foreground">{data.email}</span> to your public
+              profile so visitors can reach you?
+            </span>
+          </span>
+          <Toggle
+            on={data.emailOnProfile}
+            onToggle={() => update({ emailOnProfile: !data.emailOnProfile })}
+            label="Add email to profile"
+          />
+        </label>
+      ) : null}
 
       <fieldset disabled={locked} className={locked ? 'pointer-events-none opacity-50' : ''}>
         <p className="mb-3 text-sm font-semibold text-foreground">Social profiles</p>

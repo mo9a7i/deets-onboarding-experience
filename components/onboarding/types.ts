@@ -6,6 +6,7 @@ export type ColorTheme = {
 }
 
 export const COLOR_THEMES: ColorTheme[] = [
+  { id: 'classic', name: 'Classic', main: '#111827', accent: '#F3F4F6' },
   { id: 'sunset', name: 'Sunset', main: '#FF5C42', accent: '#FFD23F' },
   { id: 'cobalt', name: 'Cobalt', main: '#2D5BFF', accent: '#7CC6FF' },
   { id: 'grape', name: 'Grape', main: '#7A3CFF', accent: '#C9A7FF' },
@@ -13,10 +14,10 @@ export const COLOR_THEMES: ColorTheme[] = [
   { id: 'midnight', name: 'Midnight', main: '#1F2430', accent: '#FFB020' },
   { id: 'rose', name: 'Rose', main: '#E23E80', accent: '#FFC2D9' },
   { id: 'lagoon', name: 'Lagoon', main: '#0FA3A3', accent: '#7FE3D2' },
-  { id: 'tangerine', name: 'Tangerine', main: '#FF7A18', accent: '#FFC48C' },
 ]
 
-export const DEFAULT_THEME = COLOR_THEMES[0]
+// Sunset is the brand-forward default vibe; Classic is the simple formal option.
+export const DEFAULT_THEME = COLOR_THEMES[1]
 
 export type LinkItem = {
   id: string
@@ -51,6 +52,7 @@ export type OnboardingData = {
   themeId: string | null
   socials: SocialItem[]
   links: LinkItem[]
+  emailOnProfile: boolean
   shareContact: boolean
   askVisitors: boolean
   contactCard: ContactCard
@@ -70,6 +72,7 @@ export const INITIAL_DATA: OnboardingData = {
   themeId: DEFAULT_THEME.id,
   socials: [],
   links: [],
+  emailOnProfile: false,
   shareContact: false,
   askVisitors: false,
   contactCard: {

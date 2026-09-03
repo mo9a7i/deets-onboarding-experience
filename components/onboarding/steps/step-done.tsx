@@ -3,6 +3,7 @@
 import { ArrowRight, Check, Copy, PartyPopper } from 'lucide-react'
 import { useState } from 'react'
 import { ProfilePreview } from '../profile-preview'
+import { ProfileQr } from '../profile-qr'
 import type { OnboardingData } from '../types'
 
 export function StepDone({ data, onRestart }: { data: OnboardingData; onRestart: () => void }) {
@@ -50,6 +51,10 @@ export function StepDone({ data, onRestart }: { data: OnboardingData; onRestart:
           <Chip on label={`${data.socials.length + data.links.length} links`} />
           <Chip on={data.shareContact} label={data.shareContact ? 'Contact card on' : 'Contact card off'} />
           <Chip on={data.inDirectory} label={data.inDirectory ? 'In directory' : 'Private'} />
+        </div>
+
+        <div className="mt-6">
+          <ProfileQr url={`https://${url}`} username={data.username} color={data.mainColor} />
         </div>
 
         <button

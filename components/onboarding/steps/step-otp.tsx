@@ -22,12 +22,15 @@ export function StepOtp({ data, update }: Props) {
   const codeComplete = digits.every((d) => d !== '')
   const passwordValid = data.password.length >= 8
 
-  // Auto-advance to the code phase once all digits are filled.
+  // A complete code verifies the email; the password phase is optional backup.
+  // Marking it here means verification survives even if the backup step is skipped.
   useEffect(() => {
     if (phase === 'code' && codeComplete) {
+      update({ emailVerified: true })
       const t = setTimeout(() => setPhase('password'), 350)
       return () => clearTimeout(t)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, codeComplete])
 
   function sendCode() {

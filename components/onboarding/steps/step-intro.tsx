@@ -12,6 +12,7 @@ const TYPEWRITER_WORDS = [
   'online stores',
   'influencers',
   'business cards',
+  'employees',
   'creators',
   'artists',
   'podcasts',
@@ -28,9 +29,9 @@ export function StepIntro({ onStart }: { onStart: () => void }) {
           deets.pro
         </span>
         <h1 className="mt-5 text-balance font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-foreground sm:text-6xl">
-          Give me your deets.
+          All of you,
           <br />
-          One link for <Typewriter words={TYPEWRITER_WORDS} className="text-primary" />
+          in one link for <Typewriter words={TYPEWRITER_WORDS} className="text-primary" />
         </h1>
         <p className="mt-5 max-w-md text-pretty text-lg leading-relaxed text-muted-foreground">
           You give people your deets, they give you theirs. Set up your profile in seven quick
