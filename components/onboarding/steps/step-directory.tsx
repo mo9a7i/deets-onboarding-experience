@@ -14,7 +14,7 @@ export function StepDirectory({ data, update }: Props) {
     <StepShell
       eyebrow="Step 7 · Discoverability"
       title="Join the public directory?"
-      subtitle="Choose whether your profile can be found in the direct.me directory. You can change this anytime."
+      subtitle="Choose whether your profile can be found in the deets public directory. You can change this anytime."
     >
       <div className="grid gap-3 sm:grid-cols-2">
         <button

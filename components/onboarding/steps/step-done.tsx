@@ -7,7 +7,7 @@ import type { OnboardingData } from '../types'
 
 export function StepDone({ data, onRestart }: { data: OnboardingData; onRestart: () => void }) {
   const [copied, setCopied] = useState(false)
-  const url = `direct.me/${data.username || 'yourname'}`
+  const url = `deets.pro/${data.username || 'yourname'}`
 
   function copy() {
     navigator.clipboard?.writeText(`https://${url}`)
@@ -30,7 +30,7 @@ export function StepDone({ data, onRestart }: { data: OnboardingData; onRestart:
           Your profile is ready, {data.title || 'friend'}.
         </h1>
         <p className="mt-4 text-pretty text-lg leading-relaxed text-muted-foreground">
-          Share your link anywhere and start growing your audience.
+          Hand out your deets anywhere and start growing your audience.
         </p>
 
         <div className="mt-6 flex items-center gap-2 rounded-full border border-border bg-card p-1.5 pl-5">

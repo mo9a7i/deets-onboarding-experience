@@ -90,7 +90,7 @@ export const TAKEN_USERNAMES = new Set([
   'john',
   'jane',
   'app',
-  'direct',
+  'deets',
   'support',
   'hello',
   'test',

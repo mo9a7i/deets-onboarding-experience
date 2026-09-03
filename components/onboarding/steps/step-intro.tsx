@@ -25,16 +25,17 @@ export function StepIntro({ onStart }: { onStart: () => void }) {
     <div className="mx-auto grid w-full max-w-5xl items-center gap-10 md:grid-cols-2">
       <div>
         <span className="inline-flex items-center rounded-full bg-accent px-3 py-1 font-display text-xs font-bold uppercase tracking-wide text-accent-foreground">
-          direct.me
+          deets.pro
         </span>
         <h1 className="mt-5 text-balance font-display text-5xl font-extrabold leading-[0.95] tracking-tight text-foreground sm:text-6xl">
-          One link for
+          Give me your deets.
           <br />
-          <Typewriter words={TYPEWRITER_WORDS} className="text-primary" />
+          One link for <Typewriter words={TYPEWRITER_WORDS} className="text-primary" />
         </h1>
         <p className="mt-5 max-w-md text-pretty text-lg leading-relaxed text-muted-foreground">
-          Set up your profile in seven quick steps. Claim your URL, pick your colors, add your
-          links — and start sharing in minutes.
+          You give people your deets, they give you theirs. Set up your profile in seven quick
+          steps — claim your link, pick your colors, add everything you are, and start sharing in
+          minutes.
         </p>
         <button
           type="button"

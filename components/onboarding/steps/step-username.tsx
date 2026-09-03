@@ -37,8 +37,8 @@ export function StepUsername({ data, update }: Props) {
   return (
     <StepShell
       eyebrow="Step 2 · Claim it"
-      title="Pick your direct.me link"
-      subtitle="This is the URL you'll share everywhere. Choose something short and memorable — you can't change it as easily later."
+      title="Pick your deets link"
+      subtitle="This is the link you'll hand out everywhere. Choose something short and memorable — you can't change it as easily later."
     >
       <div>
         <div
@@ -51,7 +51,7 @@ export function StepUsername({ data, update }: Props) {
           }`}
         >
           <span className="select-none py-4 pl-4 pr-1 font-display text-lg font-bold text-muted-foreground">
-            direct.me/
+            deets.pro/
           </span>
           <input
             type="text"

@@ -16,9 +16,9 @@ const bricolage = Bricolage_Grotesque({
 })
 
 export const metadata: Metadata = {
-  title: 'Get started · direct.me',
+  title: 'Get started · deets',
   description:
-    'Create your link-in-bio profile in a few playful steps — pick your URL, set your vibe, and share everything you are in one link.',
+    'deets.pro — give people your deets. Create your link-in-bio profile in a few playful steps: pick your link, set your vibe, and share everything you are in one place.',
   generator: 'v0.app',
 }
 

@@ -82,7 +82,7 @@ export function OnboardingFlow() {
       <header className="sticky top-0 z-10 border-b border-border/60 bg-background/80 backdrop-blur">
         <div className="mx-auto flex w-full max-w-2xl items-center gap-4 px-5 py-4">
           <span className="font-display text-sm font-extrabold tracking-tight text-foreground">
-            direct.me
+            deets<span className="text-primary">.pro</span>
           </span>
           <div className="flex flex-1 gap-1.5" role="progressbar" aria-valuenow={step + 1} aria-valuemin={1} aria-valuemax={TOTAL}>
             {Array.from({ length: TOTAL }).map((_, i) => (
