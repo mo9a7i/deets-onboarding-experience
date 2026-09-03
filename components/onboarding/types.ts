@@ -6,7 +6,7 @@ export type ColorTheme = {
 }
 
 export const COLOR_THEMES: ColorTheme[] = [
-  { id: 'classic', name: 'Classic', main: '#111827', accent: '#F3F4F6' },
+  { id: 'classic', name: 'Classic', main: '#FFFFFF', accent: '#1F2937' },
   { id: 'sunset', name: 'Sunset', main: '#FF5C42', accent: '#FFD23F' },
   { id: 'cobalt', name: 'Cobalt', main: '#2D5BFF', accent: '#7CC6FF' },
   { id: 'grape', name: 'Grape', main: '#7A3CFF', accent: '#C9A7FF' },
