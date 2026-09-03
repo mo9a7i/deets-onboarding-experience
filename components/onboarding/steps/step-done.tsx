@@ -53,10 +53,6 @@ export function StepDone({ data, onRestart }: { data: OnboardingData; onRestart:
           <Chip on={data.inDirectory} label={data.inDirectory ? 'In directory' : 'Private'} />
         </div>
 
-        <div className="mt-6">
-          <ProfileQr url={`https://${url}`} username={data.username} color={data.mainColor} />
-        </div>
-
         <button
           type="button"
           onClick={onRestart}
@@ -79,18 +75,23 @@ export function StepDone({ data, onRestart }: { data: OnboardingData; onRestart:
         </button>
       </div>
 
-      <div className="relative mx-auto w-full max-w-[280px]">
-        <div className="absolute -inset-6 -z-10 rounded-[2.5rem] blur-2xl" style={{ background: `${data.accentColor}66` }} />
-        <div className="rounded-[2rem] bg-card p-3 shadow-xl ring-1 ring-border">
-          <ProfilePreview
-            main={data.mainColor}
-            accent={data.accentColor}
-            name={data.title || 'Alex Rivera'}
-            title={data.bio || 'Designer & maker'}
-            avatarDataUrl={data.avatarDataUrl}
-            links={links.slice(0, 3)}
-            size="lg"
-          />
+      <div className="mx-auto w-full max-w-[280px]">
+        <div className="relative">
+          <div className="absolute -inset-6 -z-10 rounded-[2.5rem] blur-2xl" style={{ background: `${data.accentColor}66` }} />
+          <div className="rounded-[2rem] bg-card p-3 shadow-xl ring-1 ring-border">
+            <ProfilePreview
+              main={data.mainColor}
+              accent={data.accentColor}
+              name={data.title || 'Alex Rivera'}
+              title={data.bio || 'Designer & maker'}
+              avatarDataUrl={data.avatarDataUrl}
+              links={links.slice(0, 3)}
+              size="lg"
+            />
+          </div>
+        </div>
+        <div className="mt-5">
+          <ProfileQr url={`https://${url}`} username={data.username} color={data.mainColor} />
         </div>
       </div>
     </div>
