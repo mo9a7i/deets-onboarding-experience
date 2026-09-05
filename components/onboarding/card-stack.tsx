@@ -47,7 +47,7 @@ export function CardStack({ trackRef }: { trackRef?: React.RefObject<HTMLElement
   return (
     <div
       onMouseLeave={() => setHovered(null)}
-      className="relative mx-auto h-[440px] w-full max-w-[420px]"
+      className="relative mx-auto h-[550px] w-full max-w-[525px]"
     >
       <div className="absolute inset-6 -z-10 rounded-[3rem] bg-accent/40 blur-3xl" />
 
@@ -208,16 +208,19 @@ function StackCard({
   const isHovered = hovered === id
   const dimmed = hovered !== null && !isHovered
 
+  // All cards sit 25% larger; hover/dim nudges that baseline.
+  const SCALE = 1.25
+
   // Parallax: deeper cards drift further; hovered card lifts toward the pointer.
   const tx = pointer.x * depth
   const ty = pointer.y * depth
   const rotate = base.rotate + pointer.x * (isHovered ? 2 : 6)
-  const scale = isHovered ? 1.06 : dimmed ? 0.97 : 1
+  const scale = (isHovered ? 1.06 : dimmed ? 0.97 : 1) * SCALE
 
   return (
     <div
       onMouseEnter={() => setHovered(id)}
-      className={`absolute cursor-pointer transition-[transform,opacity] duration-200 ease-out ${className ?? ''}`}
+      className={`absolute cursor-pointer transition-[transform,opacity] duration-[650ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] ${className ?? ''}`}
       style={{
         left: base.left,
         top: base.top,
