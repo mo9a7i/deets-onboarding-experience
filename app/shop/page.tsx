@@ -1,8 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Clock, GripVertical, MapPin, Phone, Plus, Store, Trash2, UtensilsCrossed } from 'lucide-react'
+import { Clock, GripVertical, ImagePlus, MapPin, Phone, Plus, Store, Trash2, UtensilsCrossed } from 'lucide-react'
 import { DashboardNav } from '@/components/dashboard/dashboard-nav'
+import { AvatarCropper } from '@/components/onboarding/avatar-cropper'
 import {
   uid,
   useProfiles,
@@ -11,9 +13,12 @@ import {
   type ShopData,
 } from '@/components/dashboard/store'
 
+type CropTarget = { catId: string; itemId: string; src: string }
+
 export default function ShopPage() {
   const router = useRouter()
   const { active, updateProfile, activateShop } = useProfiles()
+  const [cropTarget, setCropTarget] = useState<CropTarget | null>(null)
 
   if (active.type !== 'shop' || !active.shop) {
     return (
@@ -71,7 +76,10 @@ export default function ShopPage() {
     patchCategories(
       shop.categories.map((c) =>
         c.id === catId
-          ? { ...c, items: [...c.items, { id: uid('item'), name: '', description: '', price: '' }] }
+          ? {
+              ...c,
+              items: [...c.items, { id: uid('item'), name: '', description: '', price: '', image: null }],
+            }
           : c,
       ),
     )
@@ -91,6 +99,20 @@ export default function ShopPage() {
         c.id === catId ? { ...c, items: c.items.filter((it) => it.id !== itemId) } : c,
       ),
     )
+  }
+
+  function pickImage(catId: string, itemId: string) {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'image/*'
+    input.onchange = () => {
+      const file = input.files?.[0]
+      if (!file) return
+      const reader = new FileReader()
+      reader.onload = () => setCropTarget({ catId, itemId, src: reader.result as string })
+      reader.readAsDataURL(file)
+    }
+    input.click()
   }
 
   const itemCount = shop.categories.reduce((n, c) => n + c.items.length, 0)
@@ -168,8 +190,30 @@ export default function ShopPage() {
                     {cat.items.map((item) => (
                       <div
                         key={item.id}
-                        className="grid grid-cols-[1fr_auto] gap-3 rounded-xl border border-border bg-background p-3"
+                        className="grid grid-cols-[auto_1fr_auto] gap-3 rounded-xl border border-border bg-background p-3"
                       >
+                        <button
+                          type="button"
+                          onClick={() => pickImage(cat.id, item.id)}
+                          className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-border bg-muted"
+                          aria-label={item.image ? 'Change item photo' : 'Add item photo'}
+                        >
+                          {item.image ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={item.image || '/placeholder.svg'}
+                              alt={item.name || 'Menu item'}
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <span className="flex h-full w-full flex-col items-center justify-center gap-0.5 text-muted-foreground">
+                              <ImagePlus className="h-5 w-5" />
+                            </span>
+                          )}
+                          <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-foreground/0 opacity-0 transition-all group-hover:bg-foreground/40 group-hover:opacity-100">
+                            <ImagePlus className="h-4 w-4 text-background" />
+                          </span>
+                        </button>
                         <div className="flex flex-col gap-2">
                           <input
                             value={item.name}
@@ -303,6 +347,21 @@ export default function ShopPage() {
           </div>
         </div>
       </main>
+
+      {cropTarget ? (
+        <AvatarCropper
+          image={cropTarget.src}
+          aspect={4 / 3}
+          cropShape="rect"
+          title="Crop item photo"
+          outputWidth={800}
+          onCancel={() => setCropTarget(null)}
+          onSave={(dataUrl) => {
+            updateItem(cropTarget.catId, cropTarget.itemId, { image: dataUrl })
+            setCropTarget(null)
+          }}
+        />
+      ) : null}
     </div>
   )
 }
@@ -372,7 +431,15 @@ function MenuPreview({
                     <p className="text-xs text-muted-foreground">No items yet.</p>
                   ) : (
                     cat.items.map((item) => (
-                      <div key={item.id} className="flex items-baseline gap-2">
+                      <div key={item.id} className="flex items-center gap-2.5">
+                        {item.image ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={item.image || '/placeholder.svg'}
+                            alt={item.name || 'Menu item'}
+                            className="h-10 w-10 shrink-0 rounded-lg object-cover"
+                          />
+                        ) : null}
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-sm font-semibold text-foreground">
                             {item.name || 'Untitled item'}

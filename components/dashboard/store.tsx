@@ -5,7 +5,13 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 export type SocialItem = { id: string; platform: string; handle: string }
 export type LinkItem = { id: string; label: string; url: string; clicks: number }
 
-export type MenuItem = { id: string; name: string; description: string; price: string }
+export type MenuItem = {
+  id: string
+  name: string
+  description: string
+  price: string
+  image: string | null
+}
 export type MenuCategory = { id: string; name: string; items: MenuItem[] }
 export type HourRow = { day: string; open: string; close: string; closed: boolean }
 export type ShopData = {
@@ -94,15 +100,33 @@ export function starterShop(): ShopData {
         id: uid('cat'),
         name: 'Coffee',
         items: [
-          { id: uid('item'), name: 'Flat White', description: 'Double shot, silky microfoam', price: '4.50' },
-          { id: uid('item'), name: 'Cold Brew', description: '18-hour steep, over ice', price: '5.00' },
+          {
+            id: uid('item'),
+            name: 'Flat White',
+            description: 'Double shot, silky microfoam',
+            price: '4.50',
+            image: '/menu/flat-white.png',
+          },
+          {
+            id: uid('item'),
+            name: 'Cold Brew',
+            description: '18-hour steep, over ice',
+            price: '5.00',
+            image: '/menu/cold-brew.png',
+          },
         ],
       },
       {
         id: uid('cat'),
         name: 'Bakery',
         items: [
-          { id: uid('item'), name: 'Almond Croissant', description: 'Baked fresh each morning', price: '3.75' },
+          {
+            id: uid('item'),
+            name: 'Almond Croissant',
+            description: 'Baked fresh each morning',
+            price: '3.75',
+            image: '/menu/almond-croissant.png',
+          },
         ],
       },
     ],
@@ -119,8 +143,8 @@ function seedProfiles(): Profile[] {
       avatarDataUrl: null,
       mainColor: '#FF5C42',
       accentColor: '#FFD23F',
-      type: 'link',
-      shop: null,
+      type: 'shop',
+      shop: starterShop(),
       socials: [
         { id: uid('s'), platform: 'Instagram', handle: 'alex.makes' },
         { id: uid('s'), platform: 'X', handle: 'alexrivera' },
@@ -174,7 +198,7 @@ export function ProfilesProvider({ children }: { children: React.ReactNode }) {
     phone: '',
     email: 'alex@studio.com',
     emailVerified: true,
-    plan: 'free',
+    plan: 'premium',
   })
   const [profiles, setProfiles] = useState<Profile[]>(seedProfiles)
   const [activeId, setActiveId] = useState('p_alex')
@@ -254,6 +278,13 @@ export function summarize(daily: DailyStat[]) {
   const clicks = daily.reduce((s, d) => s + d.clicks, 0)
   const ctr = views ? (clicks / views) * 100 : 0
   return { views, clicks, ctr }
+}
+
+export type ResolvedMenuItem = { item: MenuItem; categoryName: string }
+
+export function flattenMenu(shop: ShopData | null): ResolvedMenuItem[] {
+  if (!shop) return []
+  return shop.categories.flatMap((c) => c.items.map((item) => ({ item, categoryName: c.name })))
 }
 
 export function initialsOf(name: string) {
