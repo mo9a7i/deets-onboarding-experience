@@ -1,9 +1,8 @@
 'use client'
 
 import { ArrowRight } from 'lucide-react'
-import { ProfilePreview } from '../profile-preview'
+import { CardStack } from '../card-stack'
 import { Typewriter } from '../typewriter'
-import { DEFAULT_THEME } from '../types'
 
 const TYPEWRITER_WORDS = [
   'everything',
@@ -49,19 +48,7 @@ export function StepIntro({ onStart }: { onStart: () => void }) {
         <p className="mt-4 text-sm text-muted-foreground">Takes about 2 minutes · No credit card</p>
       </div>
 
-      <div className="relative mx-auto w-full max-w-[280px]">
-        <div className="absolute -inset-6 -z-10 rounded-[2.5rem] bg-accent/40 blur-2xl" />
-        <div className="rotate-2 rounded-[2rem] bg-card p-3 shadow-xl ring-1 ring-border transition-transform hover:rotate-0">
-          <ProfilePreview
-            main={DEFAULT_THEME.main}
-            accent={DEFAULT_THEME.accent}
-            name="Alex Rivera"
-            title="Designer & maker"
-            links={['My portfolio', 'Latest drop', 'Say hello']}
-            size="lg"
-          />
-        </div>
-      </div>
+      <CardStack />
     </div>
   )
 }
