@@ -24,9 +24,9 @@ const plexArabic = IBM_Plex_Sans_Arabic({
 })
 
 export const metadata: Metadata = {
-  title: 'Get started · deets',
+  title: 'deets.pro — All of you, in one link',
   description:
-    'deets.pro — give people your deets. Create your link-in-bio profile in a few playful steps: pick your link, set your vibe, and share everything you are in one place.',
+    'deets.pro is one playful link for everything you are — profiles, menus, storefronts, and digital business cards. Pick your vibe, add your links, and share in minutes.',
   generator: 'v0.app',
 }
 
@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`light ${inter.variable} ${bricolage.variable} ${plexArabic.variable} bg-background`}
+      className={`light scroll-smooth ${inter.variable} ${bricolage.variable} ${plexArabic.variable} bg-background`}
     >
       <body className="font-sans antialiased">
         <ProfilesProvider>{children}</ProfilesProvider>

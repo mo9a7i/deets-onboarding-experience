@@ -15,9 +15,9 @@ import { StepDone } from './steps/step-done'
 
 const TOTAL = 7
 
-export function OnboardingFlow() {
+export function OnboardingFlow({ initialStep = -1 }: { initialStep?: number }) {
   // -1 = intro, 0..6 = steps, 7 = done
-  const [step, setStep] = useState(-1)
+  const [step, setStep] = useState(initialStep)
   const [data, setData] = useState<OnboardingData>(INITIAL_DATA)
 
   const update = (patch: Partial<OnboardingData>) =>

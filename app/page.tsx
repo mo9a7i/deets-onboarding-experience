@@ -1,9 +1,5 @@
-import { OnboardingFlow } from '@/components/onboarding/onboarding-flow'
+import { LandingPage } from '@/components/landing/landing-page'
 
 export default function Page() {
-  return (
-    <main className="min-h-[100dvh] bg-background">
-      <OnboardingFlow />
-    </main>
-  )
+  return <LandingPage />
 }
