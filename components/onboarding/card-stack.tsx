@@ -66,7 +66,7 @@ export function CardStack({ trackRef }: { trackRef?: React.RefObject<HTMLElement
           <div className="relative h-24 w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/menu/almond-croissant.png"
+              src="/menu/arabic-mixed-grill.png"
               alt="Signature dish"
               className="h-full w-full object-cover"
             />
@@ -75,19 +75,19 @@ export function CardStack({ trackRef }: { trackRef?: React.RefObject<HTMLElement
             </span>
           </div>
           <div className="p-3">
-            <p className="font-display text-sm font-extrabold text-foreground">Olive & Ember</p>
+            <p className="font-display text-sm font-extrabold text-foreground">Zaytoun & Jamr</p>
             <p className="flex items-center gap-1 text-[11px] text-muted-foreground">
-              <MapPin className="h-3 w-3" /> Corner of 5th & Main
+              <MapPin className="h-3 w-3" /> King Fahd Rd, Riyadh
             </p>
             <div className="mt-2.5 space-y-1.5">
               {[
-                ['Wood-fired margherita', '14'],
-                ['Truffle tagliatelle', '19'],
+                ['Mixed grill platter', '45'],
+                ['Lamb mandi', '60'],
               ].map(([name, price]) => (
                 <div key={name} className="flex items-center justify-between gap-2">
                   <span className="truncate text-[11px] font-medium text-foreground">{name}</span>
                   <span className="rounded-md bg-[#FFD23F] px-1.5 text-[11px] font-bold text-[#1b1b1f]">
-                    ${price}
+                    {price} SAR
                   </span>
                 </div>
               ))}
@@ -114,10 +114,10 @@ export function CardStack({ trackRef }: { trackRef?: React.RefObject<HTMLElement
           <div className="flex items-start justify-between">
             <div>
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#FFB020] font-display text-base font-extrabold text-[#1F2430]">
-                M
+                L
               </div>
               <p className="mt-2.5 font-display text-base font-extrabold leading-none">
-                Maya Chen
+                Layan Al-Hammadi
               </p>
               <p className="mt-1 text-[11px] font-medium text-[#FFB020]">Founder · Northlight Studio</p>
             </div>
@@ -127,10 +127,10 @@ export function CardStack({ trackRef }: { trackRef?: React.RefObject<HTMLElement
           </div>
           <div className="mt-3 flex items-center gap-3 border-t border-white/10 pt-2.5 text-[10px] text-white/70">
             <span className="flex items-center gap-1">
-              <Phone className="h-3 w-3" /> +1 415 555 0132
+              <Phone className="h-3 w-3" /> +966 55 012 3456
             </span>
             <span className="flex items-center gap-1">
-              <Mail className="h-3 w-3" /> maya@north.co
+              <Mail className="h-3 w-3" /> layan@north.sa
             </span>
           </div>
         </div>
@@ -151,7 +151,7 @@ export function CardStack({ trackRef }: { trackRef?: React.RefObject<HTMLElement
           <div className="relative h-28 w-full bg-gradient-to-br from-[#E23E80] to-[#7A3CFF]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/cards/influencer.png"
+              src="/cards/influencer-ar.png"
               alt="Creator"
               className="h-full w-full object-cover opacity-95"
             />
@@ -160,9 +160,9 @@ export function CardStack({ trackRef }: { trackRef?: React.RefObject<HTMLElement
             </span>
           </div>
           <div className="p-3">
-            <p className="font-display text-sm font-extrabold text-foreground">Jules Portmann</p>
+            <p className="font-display text-sm font-extrabold text-foreground">Noor Al-Abdullah</p>
             <p className="flex items-center gap-1 text-[11px] text-muted-foreground">
-              <AtSign className="h-3 w-3" /> jules.creates
+              <AtSign className="h-3 w-3" /> noor.creates
             </p>
             <div className="mt-2.5 space-y-1.5">
               {['Latest YouTube drop', 'Shop my presets'].map((label) => (
