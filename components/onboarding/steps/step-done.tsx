@@ -2,11 +2,13 @@
 
 import { ArrowRight, Check, Copy, PartyPopper } from 'lucide-react'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { ProfilePreview } from '../profile-preview'
 import { ProfileQr } from '../profile-qr'
 import type { OnboardingData } from '../types'
 
 export function StepDone({ data, onRestart }: { data: OnboardingData; onRestart: () => void }) {
+  const router = useRouter()
   const [copied, setCopied] = useState(false)
   const url = `deets.pro/${data.username || 'yourname'}`
 
@@ -55,7 +57,7 @@ export function StepDone({ data, onRestart }: { data: OnboardingData; onRestart:
 
         <button
           type="button"
-          onClick={onRestart}
+          onClick={() => router.push('/home')}
           className="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-4 font-display text-base font-bold text-primary-foreground transition-transform hover:scale-[1.01] active:scale-[0.99] sm:w-auto"
         >
           Take me to my home
