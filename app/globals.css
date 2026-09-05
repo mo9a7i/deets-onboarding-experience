@@ -61,6 +61,39 @@
   --radius: 1rem;
 }
 
+/* Green variant (used on /2). Light mode overrides just the accent hues so it
+   inherits the warm neutral canvas; dark mode redefines the full token set. */
+.theme-green {
+  --primary: oklch(0.62 0.15 158);
+  --primary-foreground: oklch(0.99 0.01 150);
+  --accent: oklch(0.9 0.09 160);
+  --accent-foreground: oklch(0.32 0.06 160);
+  --ring: oklch(0.62 0.15 158);
+}
+
+.theme-green.dark {
+  color-scheme: dark;
+  --background: oklch(0.19 0.012 160);
+  --foreground: oklch(0.96 0.008 140);
+  --card: oklch(0.22 0.012 160);
+  --card-foreground: oklch(0.96 0.008 140);
+  --popover: oklch(0.22 0.012 160);
+  --popover-foreground: oklch(0.96 0.008 140);
+  --primary: oklch(0.72 0.16 158);
+  --primary-foreground: oklch(0.17 0.02 160);
+  --secondary: oklch(0.27 0.012 160);
+  --secondary-foreground: oklch(0.96 0.008 140);
+  --muted: oklch(0.27 0.012 160);
+  --muted-foreground: oklch(0.72 0.02 150);
+  --accent: oklch(0.42 0.09 160);
+  --accent-foreground: oklch(0.95 0.02 150);
+  --destructive: oklch(0.62 0.2 25);
+  --destructive-foreground: oklch(0.98 0.01 90);
+  --border: oklch(0.3 0.012 160);
+  --input: oklch(0.3 0.012 160);
+  --ring: oklch(0.72 0.16 158);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
