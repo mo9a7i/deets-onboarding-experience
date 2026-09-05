@@ -8,12 +8,18 @@ type Props = {
   image: string
   onCancel: () => void
   onSave: (dataUrl: string) => void
+  aspect?: number
+  cropShape?: 'round' | 'rect'
+  title?: string
+  outputWidth?: number
 }
 
 async function getCroppedImage(
   imageSrc: string,
   crop: Area,
   rotation: number,
+  aspect: number,
+  outputWidth: number,
 ): Promise<string> {
   const image = await new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image()
@@ -27,35 +33,34 @@ async function getCroppedImage(
   const ctx = canvas.getContext('2d')
   if (!ctx) return imageSrc
 
-  // Output a crisp square avatar, capped for reasonable size.
-  const size = Math.min(crop.width, 512)
-  canvas.width = size
-  canvas.height = size
+  // Output at the requested width, keeping the crop's aspect ratio.
+  const outW = Math.min(crop.width, outputWidth)
+  const outH = Math.round(outW / aspect)
+  canvas.width = outW
+  canvas.height = outH
 
   const rad = (rotation * Math.PI) / 180
 
-  // Draw the (possibly rotated) source region into the square canvas.
+  // Draw the (possibly rotated) source region into the canvas.
   ctx.save()
-  ctx.translate(size / 2, size / 2)
+  ctx.translate(outW / 2, outH / 2)
   ctx.rotate(rad)
-  ctx.translate(-size / 2, -size / 2)
-  ctx.drawImage(
-    image,
-    crop.x,
-    crop.y,
-    crop.width,
-    crop.height,
-    0,
-    0,
-    size,
-    size,
-  )
+  ctx.translate(-outW / 2, -outH / 2)
+  ctx.drawImage(image, crop.x, crop.y, crop.width, crop.height, 0, 0, outW, outH)
   ctx.restore()
 
   return canvas.toDataURL('image/jpeg', 0.92)
 }
 
-export function AvatarCropper({ image, onCancel, onSave }: Props) {
+export function AvatarCropper({
+  image,
+  onCancel,
+  onSave,
+  aspect = 1,
+  cropShape = 'round',
+  title = 'Crop your photo',
+  outputWidth = 512,
+}: Props) {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [rotation, setRotation] = useState(0)
@@ -69,7 +74,7 @@ export function AvatarCropper({ image, onCancel, onSave }: Props) {
   async function handleSave() {
     if (!pixels) return
     setSaving(true)
-    const result = await getCroppedImage(image, pixels, rotation)
+    const result = await getCroppedImage(image, pixels, rotation, aspect, outputWidth)
     onSave(result)
   }
 
@@ -83,7 +88,7 @@ export function AvatarCropper({ image, onCancel, onSave }: Props) {
       <div className="w-full max-w-md overflow-hidden rounded-3xl bg-card shadow-2xl ring-1 ring-border">
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <h2 className="font-display text-lg font-extrabold tracking-tight text-foreground">
-            Crop your photo
+            {title}
           </h2>
           <button
             type="button"
@@ -101,8 +106,8 @@ export function AvatarCropper({ image, onCancel, onSave }: Props) {
             crop={crop}
             zoom={zoom}
             rotation={rotation}
-            aspect={1}
-            cropShape="round"
+            aspect={aspect}
+            cropShape={cropShape}
             showGrid={false}
             onCropChange={setCrop}
             onZoomChange={setZoom}

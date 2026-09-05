@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Bricolage_Grotesque } from 'next/font/google'
+import { ProfilesProvider } from '@/components/dashboard/store'
 import './globals.css'
 
 const inter = Inter({
@@ -40,7 +41,7 @@ export default function RootLayout({
       className={`light ${inter.variable} ${bricolage.variable} bg-background`}
     >
       <body className="font-sans antialiased">
-        {children}
+        <ProfilesProvider>{children}</ProfilesProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
