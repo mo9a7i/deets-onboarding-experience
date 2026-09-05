@@ -12,10 +12,15 @@ import { ContactSection } from './contact-section'
 import { CtaBand } from './cta-band'
 import { LandingFooter } from './landing-footer'
 
-export function LandingPage() {
+type LandingPageProps = {
+  isDark?: boolean
+  onToggleDark?: () => void
+}
+
+export function LandingPage({ isDark, onToggleDark }: LandingPageProps) {
   return (
     <div className="min-h-[100dvh] bg-background">
-      <LandingHeader />
+      <LandingHeader isDark={isDark} onToggleDark={onToggleDark} />
       <main>
         <HeroSection />
         <PartnersSection />

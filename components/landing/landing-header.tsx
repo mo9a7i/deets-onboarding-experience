@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, Menu, X } from 'lucide-react'
+import { ArrowRight, Menu, X, Sun, Moon } from 'lucide-react'
 
 const NAV = [
   { label: 'Features', href: '#features' },
@@ -12,7 +12,12 @@ const NAV = [
   { label: 'Contact', href: '#contact' },
 ]
 
-export function LandingHeader() {
+type LandingHeaderProps = {
+  isDark?: boolean
+  onToggleDark?: () => void
+}
+
+export function LandingHeader({ isDark, onToggleDark }: LandingHeaderProps) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -47,6 +52,17 @@ export function LandingHeader() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
+          {onToggleDark ? (
+            <button
+              type="button"
+              onClick={onToggleDark}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              aria-pressed={isDark}
+            >
+              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
+          ) : null}
           <Link
             href="/home"
             className="rounded-full px-4 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
@@ -62,15 +78,28 @@ export function LandingHeader() {
           </Link>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted md:hidden"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-1 md:hidden">
+          {onToggleDark ? (
+            <button
+              type="button"
+              onClick={onToggleDark}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted"
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              aria-pressed={isDark}
+            >
+              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
+          ) : null}
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {open ? (
