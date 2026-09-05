@@ -62,38 +62,38 @@ export function CardStack({ trackRef }: { trackRef?: React.RefObject<HTMLElement
         float="stackFloatA 7s ease-in-out infinite"
         className="w-[210px]"
       >
-        <div dir="rtl" className="font-arabic overflow-hidden rounded-2xl bg-card shadow-xl ring-1 ring-border">
+        <div className="overflow-hidden rounded-2xl bg-card shadow-xl ring-1 ring-border">
           <div className="relative h-24 w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/menu/arabic-mixed-grill.png"
-              alt="طبق مميز"
+              alt="Signature dish"
               className="h-full w-full object-cover"
             />
-            <span className="absolute right-2 top-2 rounded-full bg-[#FF5C42] px-2 py-0.5 font-arabic text-[10px] font-bold text-white">
-              مفتوح الآن
+            <span className="absolute left-2 top-2 rounded-full bg-[#FF5C42] px-2 py-0.5 font-display text-[10px] font-bold uppercase tracking-wide text-white">
+              Open now
             </span>
           </div>
-          <div className="p-3 text-right">
-            <p className="font-arabic text-sm font-extrabold text-foreground">زيتون وجمر</p>
-            <p className="flex items-center justify-start gap-1 text-[11px] text-muted-foreground">
-              <MapPin className="h-3 w-3" /> شارع الملك فهد، الرياض
+          <div className="p-3">
+            <p className="font-display text-sm font-extrabold text-foreground">Zaytoun & Jamr</p>
+            <p className="flex items-center gap-1 text-[11px] text-muted-foreground">
+              <MapPin className="h-3 w-3" /> King Fahd Rd, Riyadh
             </p>
             <div className="mt-2.5 space-y-1.5">
               {[
-                ['مشاوي مشكلة', '45'],
-                ['مندي لحم', '60'],
+                ['Mixed grill platter', '45'],
+                ['Lamb mandi', '60'],
               ].map(([name, price]) => (
                 <div key={name} className="flex items-center justify-between gap-2">
                   <span className="truncate text-[11px] font-medium text-foreground">{name}</span>
                   <span className="rounded-md bg-[#FFD23F] px-1.5 text-[11px] font-bold text-[#1b1b1f]">
-                    {price} ر.س
+                    {price} SAR
                   </span>
                 </div>
               ))}
             </div>
-            <div className="mt-3 rounded-lg bg-[#FF5C42] py-1.5 text-center font-arabic text-[11px] font-bold text-white">
-              عرض القائمة كاملة
+            <div className="mt-3 rounded-lg bg-[#FF5C42] py-1.5 text-center font-display text-[11px] font-bold text-white">
+              View full menu
             </div>
           </div>
         </div>
@@ -110,26 +110,26 @@ export function CardStack({ trackRef }: { trackRef?: React.RefObject<HTMLElement
         float="stackFloatB 9s ease-in-out -2s infinite"
         className="w-[280px]"
       >
-        <div dir="rtl" className="font-arabic overflow-hidden rounded-2xl bg-[#1F2430] p-4 text-right text-white shadow-2xl ring-1 ring-white/10">
+        <div className="overflow-hidden rounded-2xl bg-[#1F2430] p-4 text-white shadow-2xl ring-1 ring-white/10">
           <div className="flex items-start justify-between">
             <div>
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#FFB020] font-arabic text-base font-extrabold text-[#1F2430]">
-                ل
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#FFB020] font-display text-base font-extrabold text-[#1F2430]">
+                L
               </div>
-              <p className="mt-2.5 font-arabic text-base font-extrabold leading-none">
-                ليان الحمادي
+              <p className="mt-2.5 font-display text-base font-extrabold leading-none">
+                Layan Al-Hammadi
               </p>
-              <p className="mt-1 text-[11px] font-medium text-[#FFB020]">مؤسِّسة · استوديو نورث لايت</p>
+              <p className="mt-1 text-[11px] font-medium text-[#FFB020]">Founder · Northlight Studio</p>
             </div>
             <span className="rounded-full border border-white/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-white/60">
               deets.pro
             </span>
           </div>
           <div className="mt-3 flex items-center gap-3 border-t border-white/10 pt-2.5 text-[10px] text-white/70">
-            <span dir="ltr" className="flex items-center gap-1">
+            <span className="flex items-center gap-1">
               <Phone className="h-3 w-3" /> +966 55 012 3456
             </span>
-            <span dir="ltr" className="flex items-center gap-1">
+            <span className="flex items-center gap-1">
               <Mail className="h-3 w-3" /> layan@north.sa
             </span>
           </div>
@@ -147,25 +147,25 @@ export function CardStack({ trackRef }: { trackRef?: React.RefObject<HTMLElement
         float="stackFloatC 6.5s ease-in-out -1s infinite"
         className="w-[196px]"
       >
-        <div dir="rtl" className="font-arabic overflow-hidden rounded-2xl bg-card shadow-2xl ring-1 ring-border">
+        <div className="overflow-hidden rounded-2xl bg-card shadow-2xl ring-1 ring-border">
           <div className="relative h-28 w-full bg-gradient-to-br from-[#E23E80] to-[#7A3CFF]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/cards/influencer-ar.png"
-              alt="صانعة محتوى"
+              alt="Creator"
               className="h-full w-full object-cover opacity-95"
             />
-            <span className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-white/90 px-1.5 py-0.5 text-[9px] font-bold text-[#E23E80]">
-              <Star className="h-2.5 w-2.5 fill-[#E23E80]" /> ١٢٨ ألف
+            <span className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-white/90 px-1.5 py-0.5 text-[9px] font-bold text-[#E23E80]">
+              <Star className="h-2.5 w-2.5 fill-[#E23E80]" /> 128k
             </span>
           </div>
-          <div className="p-3 text-right">
-            <p className="font-arabic text-sm font-extrabold text-foreground">نور العبدالله</p>
+          <div className="p-3">
+            <p className="font-display text-sm font-extrabold text-foreground">Noor Al-Abdullah</p>
             <p className="flex items-center gap-1 text-[11px] text-muted-foreground">
               <AtSign className="h-3 w-3" /> noor.creates
             </p>
             <div className="mt-2.5 space-y-1.5">
-              {['أحدث فيديو على يوتيوب', 'تسوّقي إعداداتي'].map((label) => (
+              {['Latest YouTube drop', 'Shop my presets'].map((label) => (
                 <div
                   key={label}
                   className="flex items-center justify-between rounded-lg bg-muted px-2 py-1.5 text-[11px] font-semibold text-foreground"
