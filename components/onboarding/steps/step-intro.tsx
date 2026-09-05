@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { CardStack } from '../card-stack'
 import { Typewriter } from '../typewriter'
@@ -21,8 +22,13 @@ const TYPEWRITER_WORDS = [
 ]
 
 export function StepIntro({ onStart }: { onStart: () => void }) {
+  const sectionRef = useRef<HTMLDivElement>(null)
+
   return (
-    <div className="mx-auto grid w-full max-w-5xl items-center gap-10 md:grid-cols-2">
+    <div
+      ref={sectionRef}
+      className="mx-auto grid w-full max-w-5xl items-center gap-10 md:grid-cols-2"
+    >
       <div>
         <span className="inline-flex items-center rounded-full bg-accent px-3 py-1 font-display text-xs font-bold uppercase tracking-wide text-accent-foreground">
           deets.pro
@@ -48,7 +54,7 @@ export function StepIntro({ onStart }: { onStart: () => void }) {
         <p className="mt-4 text-sm text-muted-foreground">Takes about 2 minutes · No credit card</p>
       </div>
 
-      <CardStack />
+      <CardStack trackRef={sectionRef} />
     </div>
   )
 }

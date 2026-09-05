@@ -1,40 +1,52 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { MapPin, AtSign, Phone, Mail, ArrowUpRight, Star } from 'lucide-react'
 
 type Point = { x: number; y: number }
 
 /**
- * A playful pile of sample profiles that parallax with the pointer and lift on
- * hover, illustrating the different things a deets link can be.
+ * A playful pile of sample profiles that gently float on their own, parallax
+ * with the pointer anywhere in the section, and lift on hover — illustrating
+ * the different things a deets link can be.
+ *
+ * `trackRef` is the region whose pointer position drives the parallax. When
+ * omitted, movement is tracked across the whole window.
  */
-export function CardStack() {
-  const ref = useRef<HTMLDivElement | null>(null)
+export function CardStack({ trackRef }: { trackRef?: React.RefObject<HTMLElement | null> }) {
   const [pointer, setPointer] = useState<Point>({ x: 0, y: 0 })
   const [hovered, setHovered] = useState<string | null>(null)
 
-  function handleMove(e: React.MouseEvent) {
-    const el = ref.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    // Normalized -0.5..0.5 from the container center.
-    setPointer({
-      x: (e.clientX - rect.left) / rect.width - 0.5,
-      y: (e.clientY - rect.top) / rect.height - 0.5,
-    })
-  }
+  useEffect(() => {
+    const el = trackRef?.current ?? null
 
-  function reset() {
-    setPointer({ x: 0, y: 0 })
-    setHovered(null)
-  }
+    function handleMove(e: MouseEvent) {
+      const rect = el
+        ? el.getBoundingClientRect()
+        : { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight }
+      // Normalized -0.5..0.5 relative to the tracked region's center, clamped
+      // so the pointer can leave the region without over-driving the parallax.
+      const x = Math.max(-0.5, Math.min(0.5, (e.clientX - rect.left) / rect.width - 0.5))
+      const y = Math.max(-0.5, Math.min(0.5, (e.clientY - rect.top) / rect.height - 0.5))
+      setPointer({ x, y })
+    }
+
+    function reset() {
+      setPointer({ x: 0, y: 0 })
+    }
+
+    const target: HTMLElement | Window = el ?? window
+    target.addEventListener('mousemove', handleMove as EventListener)
+    el?.addEventListener('mouseleave', reset)
+    return () => {
+      target.removeEventListener('mousemove', handleMove as EventListener)
+      el?.removeEventListener('mouseleave', reset)
+    }
+  }, [trackRef])
 
   return (
     <div
-      ref={ref}
-      onMouseMove={handleMove}
-      onMouseLeave={reset}
+      onMouseLeave={() => setHovered(null)}
       className="relative mx-auto h-[440px] w-full max-w-[420px]"
     >
       <div className="absolute inset-6 -z-10 rounded-[3rem] bg-accent/40 blur-3xl" />
@@ -47,6 +59,7 @@ export function CardStack() {
         setHovered={setHovered}
         depth={26}
         base={{ left: '2%', top: '12%', rotate: -8, z: 10 }}
+        float="stackFloatA 7s ease-in-out infinite"
         className="w-[210px]"
       >
         <div className="overflow-hidden rounded-2xl bg-card shadow-xl ring-1 ring-border">
@@ -94,6 +107,7 @@ export function CardStack() {
         setHovered={setHovered}
         depth={44}
         base={{ left: '14%', top: '46%', rotate: 5, z: 20 }}
+        float="stackFloatB 9s ease-in-out -2s infinite"
         className="w-[280px]"
       >
         <div className="overflow-hidden rounded-2xl bg-[#1F2430] p-4 text-white shadow-2xl ring-1 ring-white/10">
@@ -130,6 +144,7 @@ export function CardStack() {
         setHovered={setHovered}
         depth={64}
         base={{ left: '44%', top: '6%', rotate: 9, z: 30 }}
+        float="stackFloatC 6.5s ease-in-out -1s infinite"
         className="w-[196px]"
       >
         <div className="overflow-hidden rounded-2xl bg-card shadow-2xl ring-1 ring-border">
@@ -176,6 +191,7 @@ function StackCard({
   setHovered,
   depth,
   base,
+  float,
   className,
   children,
 }: {
@@ -185,6 +201,7 @@ function StackCard({
   setHovered: (id: string | null) => void
   depth: number
   base: Base
+  float: string
   className?: string
   children: React.ReactNode
 }) {
@@ -209,7 +226,14 @@ function StackCard({
         transform: `translate(${tx}px, ${ty - (isHovered ? 10 : 0)}px) rotate(${rotate}deg) scale(${scale})`,
       }}
     >
-      {children}
+      {/* Inner wrapper carries the perpetual idle float so it composes with the
+          pointer parallax on the parent. Paused while hovered for a clean lift. */}
+      <div
+        className="stack-float"
+        style={{ animation: float, animationPlayState: isHovered ? 'paused' : 'running' }}
+      >
+        {children}
+      </div>
     </div>
   )
 }

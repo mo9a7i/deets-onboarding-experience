@@ -68,3 +68,39 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes stackFloatA {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(6px, -14px, 0) rotate(1.5deg);
+  }
+}
+
+@keyframes stackFloatB {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-9px, -11px, 0) rotate(-1.5deg);
+  }
+}
+
+@keyframes stackFloatC {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(7px, -18px, 0) rotate(2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-float {
+    animation: none !important;
+  }
+}
